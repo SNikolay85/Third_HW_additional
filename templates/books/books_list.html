@@ -10,19 +10,13 @@
         <div class="row">
             {% for book in books %}
             <div class="book col-md-4">
-                    <h2>{{ book.name }}</h2>
-                    <p>{{ book.author }}</p>
                 <a href="{% url 'pub_date' book.pub_date %}">
-                    <p>{{ book.pub_date }}</p>
+                    <h2>{{ book.name }}</h2>
                 </a>
+                    <p>{{ book.author }}</p>
+                    <p>{{ book.pub_date }}</p>
             </div>
             {% endfor %}
         </div>
     </div>
 {% endblock %}
-
-<!--<div class="book col-md-4">-->
-<!--                <h2>Сияние</h2>-->
-<!--                <p>Автор: Стивен Кинг</p>-->
-<!--                <p>Дата публикации: 2018-09-10</p>-->
-<!--            </div>-->

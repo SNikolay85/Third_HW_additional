@@ -15,6 +15,22 @@ def forming(books_objects):
         books.append(book_dict)
     return books
 
+
+def forming_date(books_objects):
+    books = []
+    for book in books_objects:
+        book_dict = {
+            str(book.pub_date):{
+                'name': book.name,
+                'author': book.author,
+            }
+        }
+        books.append(book_dict)
+    return books
+# content = [
+#     {'pub_date':{'name': book.name, 'author': book.author}}
+# ]
+
 def books_view_list(request):
     books_objects = Book.objects.all()
     books = forming(books_objects)
@@ -26,14 +42,22 @@ def books_view_list(request):
 
 
 def books_page(request, pub_date):
-    books_objects = Book.objects.filter(pub_date=pub_date)
-    paginator = Paginator(forming(books_objects), 1)
-    page = paginator.get_page(pub_date)
-    print(paginator)
+    page_number = request.path
+    #books_objects = Book.objects.filter(pub_date=pub_date)
+    books_objects = Book.objects.all()
+    paginator = Paginator(forming_date(books_objects), 5)
+    page = paginator.get_page(page_number)
+    previous_page = 30
+    next_page = 50
+    print(page_number)
+    print(forming_date(books_objects))
     template = 'books/books.html'
     context = {
-        'books': forming(books_objects),
-        'page': page
+        'books': page,#forming_date(books_objects),
+        'pub_date': pub_date,
+        'page': page,
+        'previous_page': previous_page,
+        'next_page': next_page
     }
     return render(request, template, context)
 
